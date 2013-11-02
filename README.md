@@ -1,4 +1,4 @@
-FullSailProjects
+Week1_MBG
 ================
 
-Projects for Full Sail
+Week 1 of MBG
