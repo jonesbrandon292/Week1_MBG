@@ -10,13 +10,25 @@
 
 @implementation MyScene
 {
+    bool m_game_over;
+    bool m_processing_action;
+    
     NSTimeInterval m_animation_speed;
     SKLabelNode* m_player_choice;
     SKLabelNode* m_enemy_choice;
+    SKLabelNode* m_game_over_message;
     
     SKLabelNode* m_rock_button;
     SKLabelNode* m_paper_button;
     SKLabelNode* m_scissors_button;
+    SKLabelNode* m_retry_button;
+    
+    SKAction* m_enemy_attack_action;
+    SKAction* m_player_attack_action;
+    SKAction* m_enemy_damaged_action;
+    SKAction* m_player_damaged_action;
+    SKAction* m_enemy_death_action;
+    SKAction* m_player_death_action;
     
     int m_enemy_health;
     SKSpriteNode* m_enemy;
@@ -39,7 +51,11 @@
 {
     if (self = [super initWithSize:size])
     {
+        m_game_over = false;
+        m_processing_action = false;
         m_animation_speed = 1/25.0f;
+        m_player_health = 5;
+        m_enemy_health = 5;
         
         int enemyXPos = CGRectGetMidX(self.frame);
         enemyXPos = enemyXPos + enemyXPos * 0.5f;
@@ -78,6 +94,18 @@
         m_enemy_choice = [self newButton:@"None" withName:@"enemyChoice" atPos:position];
         m_enemy_choice.hidden = true;
         [self addChild: m_enemy_choice];
+        
+        yPos = CGRectGetMaxY(self.frame) - CGRectGetMaxY(self.frame)/8;
+        position = CGPointMake(xPos * 2, yPos);
+        m_game_over_message = [self newButton:@"None" withName:@"gameOver" atPos:position];
+        m_game_over_message.hidden = true;
+        [self addChild: m_game_over_message];
+        
+        yPos = CGRectGetMaxY(self.frame) - CGRectGetMaxY(self.frame)/4;
+        position = CGPointMake(xPos * 2, yPos);
+        m_retry_button = [self newButton:@"Retry?" withName:@"retryButton" atPos:position];
+        m_retry_button.hidden = true;
+        [self addChild: m_retry_button];
     }
     return self;
 }
@@ -139,13 +167,31 @@
     
     m_player_idle = playerIdleAnim;
     
-    m_player_health = 3;
     m_player = [SKSpriteNode spriteNodeWithTexture:[m_player_idle firstObject]];// size:CGSizeMake(scale, scale)];
     m_player.position = pos;
     m_player.zRotation = rotation;
     
-    SKAction* playerIdle = [SKAction animateWithTextures:m_player_idle timePerFrame:m_animation_speed];
+    SKAction* playerIdle = [SKAction animateWithTextures:m_player_idle
+                                            timePerFrame:m_animation_speed
+                                                  resize:YES
+                                                 restore: YES];
+    
     [m_player runAction:[SKAction repeatActionForever:playerIdle]];
+    
+    m_player_attack_action = [SKAction animateWithTextures:m_player_attack
+                                              timePerFrame:m_animation_speed
+                                                    resize:YES
+                                                   restore: YES];
+    
+    m_player_damaged_action = [SKAction animateWithTextures:m_player_damaged
+                                              timePerFrame:m_animation_speed
+                                                    resize:YES
+                                                   restore: YES];
+    
+    m_player_death_action = [SKAction animateWithTextures:m_player_death
+                                              timePerFrame:m_animation_speed
+                                                    resize:YES
+                                                   restore: YES];
     
     [self addChild:m_player];
 }
@@ -196,13 +242,31 @@
     
     m_enemy_idle = enemyIdleAnim;
     
-    m_enemy_health = 3;
     m_enemy = [SKSpriteNode spriteNodeWithTexture:[m_enemy_idle firstObject]];// size:CGSizeMake(scale, scale)];
     m_enemy.position = pos;
     m_enemy.zRotation = rotation;
     
-    SKAction* enemyIdle = [SKAction animateWithTextures:m_enemy_idle timePerFrame:m_animation_speed];
+    SKAction* enemyIdle = [SKAction animateWithTextures:m_enemy_idle
+                                           timePerFrame:m_animation_speed
+                                                 resize:YES
+                                                restore: YES];
+    
     [m_enemy runAction:[SKAction repeatActionForever:enemyIdle]];
+    
+    m_enemy_attack_action = [SKAction animateWithTextures:m_enemy_attack
+                                              timePerFrame:m_animation_speed
+                                                    resize:YES
+                                                   restore: YES];
+    
+    m_enemy_damaged_action = [SKAction animateWithTextures:m_enemy_damaged
+                                               timePerFrame:m_animation_speed
+                                                     resize:YES
+                                                    restore: YES];
+    
+    m_enemy_death_action = [SKAction animateWithTextures:m_enemy_death
+                                             timePerFrame:m_animation_speed
+                                                   resize:YES
+                                                  restore: YES];
     
     [self addChild:m_enemy];
 }
@@ -243,6 +307,72 @@
     }
 }
 
+-(void)damagePlayer
+{
+    [m_enemy runAction:m_enemy_attack_action];
+    m_processing_action = true;
+    
+    if(m_player_health > 1)
+    {
+        [m_enemy runAction: m_enemy_attack_action completion:^{
+            [m_player runAction:m_player_damaged_action];
+            m_player_health -= 1;
+            [m_player runAction: m_player_damaged_action completion:^{
+                m_player_choice.hidden = true;
+                m_enemy_choice.hidden = true;
+                m_processing_action = false;
+            }];
+        }];
+    }
+    else
+    {
+        [m_enemy runAction: m_enemy_attack_action completion:^{
+            [m_player runAction:m_player_death_action];
+            m_game_over_message.text = @"You died...";
+            m_game_over_message.hidden = false;
+            m_retry_button.hidden = false;
+            m_paper_button.hidden = true;
+            m_rock_button.hidden = true;
+            m_scissors_button.hidden = true;
+            m_player_choice.hidden = true;
+            m_enemy_choice.hidden = true;
+        }];
+    }
+}
+
+-(void)damageEnemy
+{
+    [m_player runAction:m_player_attack_action];
+    m_processing_action = true;
+    
+    if(m_enemy_health > 1)
+    {
+        [m_player runAction: m_player_attack_action completion:^{
+            [m_enemy runAction:m_enemy_damaged_action];
+            m_enemy_health -= 1;
+            [m_enemy runAction: m_enemy_damaged_action completion:^{
+                m_player_choice.hidden = true;
+                m_enemy_choice.hidden = true;
+                m_processing_action = false;
+            }];
+        }];
+    }
+    else
+    {
+        [m_player runAction: m_player_attack_action completion:^{
+            [m_enemy runAction:m_enemy_death_action];
+            m_game_over_message.text = @"You Win!";
+            m_game_over_message.hidden = false;
+            m_retry_button.hidden = false;
+            m_paper_button.hidden = true;
+            m_rock_button.hidden = true;
+            m_scissors_button.hidden = true;
+            m_player_choice.hidden = true;
+            m_enemy_choice.hidden = true;
+        }];
+    }
+}
+
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
     /* Called when a touch begins */
@@ -250,7 +380,20 @@
     for (UITouch *touch in touches)
     {
             CGPoint touchLocation = [touch locationInNode:self];
-            
+        
+        
+            if(m_game_over)
+            {
+                if([m_retry_button containsPoint:touchLocation])
+                {
+                    
+                }
+                return;
+            }
+        
+            if(m_processing_action)
+                return;
+        
             int playerChoice = -1;
             if([m_rock_button containsPoint:touchLocation])
             {
@@ -280,28 +423,22 @@
             {
                 [m_player runAction:[SKAction animateWithTextures:m_player_attack
                                                      timePerFrame:m_animation_speed
-                                                           resize:NO
+                                                           resize:YES
                                                           restore: YES]];
                 
             }
             else if(winner < 0)
             {
-                [m_enemy runAction:[SKAction animateWithTextures:m_enemy_attack
-                                                     timePerFrame:m_animation_speed
-                                                           resize:NO
-                                                          restore: YES]];
+                [self damagePlayer];
             }
             else
             {
                 [m_player runAction:[SKAction animateWithTextures:m_player_attack
                                                      timePerFrame:m_animation_speed
-                                                           resize:NO
+                                                           resize:YES
                                                           restore: YES]];
                 
-                [m_enemy runAction:[SKAction animateWithTextures:m_enemy_attack
-                                                    timePerFrame:m_animation_speed
-                                                          resize:NO
-                                                         restore: YES]];
+                [self damagePlayer];
             }
     }
 }
