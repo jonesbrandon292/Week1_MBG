@@ -7,6 +7,7 @@
 //
 
 #import "MyScene.h"
+#import "MainMenuScene.h"
 
 @implementation MyScene
 {
@@ -360,6 +361,7 @@
             m_player_choice.hidden = true;
             m_enemy_choice.hidden = true;
             m_outcome.hidden = true;
+            m_game_over = true;
         }];
     }
 }
@@ -398,6 +400,7 @@
             m_player_choice.hidden = true;
             m_enemy_choice.hidden = true;
             m_outcome.hidden = true;
+            m_game_over = true;
         }];
     }
 }
@@ -415,7 +418,9 @@
             {
                 if([m_retry_button containsPoint:touchLocation])
                 {
-                    
+                    SKScene *menuScene  = [[MainMenuScene alloc] initWithSize:self.size];
+                    SKTransition *doors = [SKTransition doorsOpenVerticalWithDuration:0.5];
+                    [self.view presentScene:menuScene transition:doors];
                 }
                 return;
             }
@@ -466,7 +471,7 @@
             m_processing_action = true;
             m_outcome.text = @"Draw.";
             m_outcome.hidden = false;
-            SKAction* wait = [SKAction waitForDuration:2.0f];
+            SKAction* wait = [SKAction waitForDuration:1.0f];
             [self runAction: wait];
             [self runAction:wait completion:^{
                 m_processing_action = false;
