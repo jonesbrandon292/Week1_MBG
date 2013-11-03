@@ -59,8 +59,7 @@
             {
                 CGPoint touchLocation = [touch locationInView:self.view];
             
-                if(touchLocation.x < playButton.position.x + 20 && touchLocation.x > playButton.position.x - 20
-                   && touchLocation.y < playButton.position.y + 20 && touchLocation.y > playButton.position.y - 20)
+                if([playButton containsPoint:touchLocation])
                 {
             
                     playButton.name = nil;
