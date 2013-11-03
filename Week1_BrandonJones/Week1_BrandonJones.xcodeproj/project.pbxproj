@@ -25,6 +25,7 @@
 		82BA8B1C1825AEE200200624 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82BA8AF41825AEE200200624 /* UIKit.framework */; };
 		82BA8B241825AEE200200624 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 82BA8B221825AEE200200624 /* InfoPlist.strings */; };
 		82BA8B261825AEE200200624 /* Week1_BrandonJonesTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 82BA8B251825AEE200200624 /* Week1_BrandonJonesTests.m */; };
+		82BA8B311825B31100200624 /* MainMenuScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 82BA8B301825B31100200624 /* MainMenuScene.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -62,6 +63,8 @@
 		82BA8B211825AEE200200624 /* Week1_BrandonJonesTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Week1_BrandonJonesTests-Info.plist"; sourceTree = "<group>"; };
 		82BA8B231825AEE200200624 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		82BA8B251825AEE200200624 /* Week1_BrandonJonesTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Week1_BrandonJonesTests.m; sourceTree = "<group>"; };
+		82BA8B2F1825B31100200624 /* MainMenuScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainMenuScene.h; sourceTree = "<group>"; };
+		82BA8B301825B31100200624 /* MainMenuScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainMenuScene.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -123,6 +126,8 @@
 		82BA8AF81825AEE200200624 /* Week1_BrandonJones */ = {
 			isa = PBXGroup;
 			children = (
+				82BA8B2F1825B31100200624 /* MainMenuScene.h */,
+				82BA8B301825B31100200624 /* MainMenuScene.m */,
 				82BA8B011825AEE200200624 /* AppDelegate.h */,
 				82BA8B021825AEE200200624 /* AppDelegate.m */,
 				82BA8B041825AEE200200624 /* Main_iPhone.storyboard */,
@@ -267,6 +272,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				82BA8B0F1825AEE200200624 /* MyScene.m in Sources */,
+				82BA8B311825B31100200624 /* MainMenuScene.m in Sources */,
 				82BA8B0C1825AEE200200624 /* ViewController.m in Sources */,
 				82BA8B031825AEE200200624 /* AppDelegate.m in Sources */,
 				82BA8AFF1825AEE200200624 /* main.m in Sources */,
