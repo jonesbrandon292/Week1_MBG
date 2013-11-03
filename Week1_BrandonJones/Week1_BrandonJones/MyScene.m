@@ -16,6 +16,9 @@
     NSTimeInterval m_animation_speed;
     SKLabelNode* m_player_choice;
     SKLabelNode* m_enemy_choice;
+    SKLabelNode* m_player_health_node;
+    SKLabelNode* m_enemy_health_node;
+    SKLabelNode* m_outcome;
     SKLabelNode* m_game_over_message;
     
     SKLabelNode* m_rock_button;
@@ -95,6 +98,22 @@
         m_enemy_choice.hidden = true;
         [self addChild: m_enemy_choice];
         
+        yPos = CGRectGetMaxY(self.frame) - CGRectGetMaxY(self.frame)/4;
+        position = CGPointMake(xPos * 2, yPos);
+        m_outcome = [self newButton:@"None" withName:@"outcome" atPos:position];
+        m_outcome.hidden = true;
+        [self addChild: m_outcome];
+        
+        yPos = CGRectGetMaxY(self.frame)/4;
+        position = CGPointMake(xPos, yPos);
+        m_player_health_node = [self newButton:[NSString stringWithFormat:@"Player Health: %d", m_player_health * 20] withName:@"playerHealthNode" atPos:position];
+        [self addChild: m_player_health_node];
+        
+        yPos = CGRectGetMaxY(self.frame)/4;
+        position = CGPointMake(xPos * 3, yPos);
+        m_enemy_health_node = [self newButton:[NSString stringWithFormat:@"Enemy Health: %d", m_enemy_health * 20] withName:@"enemyHealthNode" atPos:position];
+        [self addChild: m_enemy_health_node];
+        
         yPos = CGRectGetMaxY(self.frame) - CGRectGetMaxY(self.frame)/8;
         position = CGPointMake(xPos * 2, yPos);
         m_game_over_message = [self newButton:@"None" withName:@"gameOver" atPos:position];
@@ -115,7 +134,7 @@
     SKLabelNode *button = [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
     button.text = text;
     button.color = [SKColor redColor];
-    button.fontSize = 16;
+    button.fontSize = 12;
     button.position = pos;
     button.name = name;
     return button;
@@ -317,9 +336,11 @@
         [m_enemy runAction: m_enemy_attack_action completion:^{
             [m_player runAction:m_player_damaged_action];
             m_player_health -= 1;
+            m_player_health_node.text = [NSString stringWithFormat:@"Player Health: %d", m_player_health * 20];
             [m_player runAction: m_player_damaged_action completion:^{
                 m_player_choice.hidden = true;
                 m_enemy_choice.hidden = true;
+                m_outcome.hidden = true;
                 m_processing_action = false;
             }];
         }];
@@ -328,6 +349,8 @@
     {
         [m_enemy runAction: m_enemy_attack_action completion:^{
             [m_player runAction:m_player_death_action];
+            m_player_health -= 1;
+            m_player_health_node.text = [NSString stringWithFormat:@"Player Health: %d", m_player_health * 20];
             m_game_over_message.text = @"You died...";
             m_game_over_message.hidden = false;
             m_retry_button.hidden = false;
@@ -336,6 +359,7 @@
             m_scissors_button.hidden = true;
             m_player_choice.hidden = true;
             m_enemy_choice.hidden = true;
+            m_outcome.hidden = true;
         }];
     }
 }
@@ -350,9 +374,11 @@
         [m_player runAction: m_player_attack_action completion:^{
             [m_enemy runAction:m_enemy_damaged_action];
             m_enemy_health -= 1;
+            m_enemy_health_node.text = [NSString stringWithFormat:@"Enemy Health: %d", m_enemy_health * 20];
             [m_enemy runAction: m_enemy_damaged_action completion:^{
                 m_player_choice.hidden = true;
                 m_enemy_choice.hidden = true;
+                m_outcome.hidden = true;
                 m_processing_action = false;
             }];
         }];
@@ -361,6 +387,8 @@
     {
         [m_player runAction: m_player_attack_action completion:^{
             [m_enemy runAction:m_enemy_death_action];
+            m_enemy_health -= 1;
+            m_enemy_health_node.text = [NSString stringWithFormat:@"Enemy Health: %d", m_enemy_health * 20];
             m_game_over_message.text = @"You Win!";
             m_game_over_message.hidden = false;
             m_retry_button.hidden = false;
@@ -369,6 +397,7 @@
             m_scissors_button.hidden = true;
             m_player_choice.hidden = true;
             m_enemy_choice.hidden = true;
+            m_outcome.hidden = true;
         }];
     }
 }
@@ -421,25 +450,31 @@
             int winner = [self whoWon:playerChoice enemy:enemyChoice];
             if(winner > 0)
             {
-                [m_player runAction:[SKAction animateWithTextures:m_player_attack
-                                                     timePerFrame:m_animation_speed
-                                                           resize:YES
-                                                          restore: YES]];
+                m_outcome.text = @"Win!";
+                m_outcome.hidden = false;
+                [self damageEnemy];
                 
             }
             else if(winner < 0)
             {
+                m_outcome.text = @"Loss...";
+                m_outcome.hidden = false;
                 [self damagePlayer];
             }
-            else
-            {
-                [m_player runAction:[SKAction animateWithTextures:m_player_attack
-                                                     timePerFrame:m_animation_speed
-                                                           resize:YES
-                                                          restore: YES]];
-                
-                [self damagePlayer];
-            }
+        else
+        {
+            m_processing_action = true;
+            m_outcome.text = @"Draw.";
+            m_outcome.hidden = false;
+            SKAction* wait = [SKAction waitForDuration:2.0f];
+            [self runAction: wait];
+            [self runAction:wait completion:^{
+                m_processing_action = false;
+                m_outcome.hidden = true;
+                m_player_choice.hidden = true;
+                m_enemy_choice.hidden = true;
+            }];
+        }
     }
 }
 
