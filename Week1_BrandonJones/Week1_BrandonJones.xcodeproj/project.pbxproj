@@ -26,6 +26,14 @@
 		82BA8B241825AEE200200624 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 82BA8B221825AEE200200624 /* InfoPlist.strings */; };
 		82BA8B261825AEE200200624 /* Week1_BrandonJonesTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 82BA8B251825AEE200200624 /* Week1_BrandonJonesTests.m */; };
 		82BA8B311825B31100200624 /* MainMenuScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 82BA8B301825B31100200624 /* MainMenuScene.m */; };
+		82BA8B541825D51700200624 /* Boss_Attack.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 82BA8B491825D51700200624 /* Boss_Attack.atlas */; };
+		82BA8B551825D51700200624 /* Boss_Death.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 82BA8B4A1825D51700200624 /* Boss_Death.atlas */; };
+		82BA8B561825D51700200624 /* Boss_GetHit.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 82BA8B4B1825D51700200624 /* Boss_GetHit.atlas */; };
+		82BA8B571825D51700200624 /* Boss_Idle.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 82BA8B4C1825D51700200624 /* Boss_Idle.atlas */; };
+		82BA8B591825D51700200624 /* Warrior_Attack.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 82BA8B4F1825D51700200624 /* Warrior_Attack.atlas */; };
+		82BA8B5A1825D51700200624 /* Warrior_Death.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 82BA8B501825D51700200624 /* Warrior_Death.atlas */; };
+		82BA8B5B1825D51700200624 /* Warrior_GetHit.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 82BA8B511825D51700200624 /* Warrior_GetHit.atlas */; };
+		82BA8B5C1825D51700200624 /* Warrior_Idle.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 82BA8B521825D51700200624 /* Warrior_Idle.atlas */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,6 +73,14 @@
 		82BA8B251825AEE200200624 /* Week1_BrandonJonesTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Week1_BrandonJonesTests.m; sourceTree = "<group>"; };
 		82BA8B2F1825B31100200624 /* MainMenuScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainMenuScene.h; sourceTree = "<group>"; };
 		82BA8B301825B31100200624 /* MainMenuScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainMenuScene.m; sourceTree = "<group>"; };
+		82BA8B491825D51700200624 /* Boss_Attack.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = Boss_Attack.atlas; sourceTree = "<group>"; };
+		82BA8B4A1825D51700200624 /* Boss_Death.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = Boss_Death.atlas; sourceTree = "<group>"; };
+		82BA8B4B1825D51700200624 /* Boss_GetHit.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = Boss_GetHit.atlas; sourceTree = "<group>"; };
+		82BA8B4C1825D51700200624 /* Boss_Idle.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = Boss_Idle.atlas; sourceTree = "<group>"; };
+		82BA8B4F1825D51700200624 /* Warrior_Attack.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = Warrior_Attack.atlas; sourceTree = "<group>"; };
+		82BA8B501825D51700200624 /* Warrior_Death.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = Warrior_Death.atlas; sourceTree = "<group>"; };
+		82BA8B511825D51700200624 /* Warrior_GetHit.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = Warrior_GetHit.atlas; sourceTree = "<group>"; };
+		82BA8B521825D51700200624 /* Warrior_Idle.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = Warrior_Idle.atlas; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -146,6 +162,8 @@
 		82BA8AF91825AEE200200624 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				82BA8B481825D51700200624 /* Boss */,
+				82BA8B4E1825D51700200624 /* Warrior */,
 				82BA8AFA1825AEE200200624 /* Week1_BrandonJones-Info.plist */,
 				82BA8AFB1825AEE200200624 /* InfoPlist.strings */,
 				82BA8AFE1825AEE200200624 /* main.m */,
@@ -170,6 +188,28 @@
 				82BA8B221825AEE200200624 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		82BA8B481825D51700200624 /* Boss */ = {
+			isa = PBXGroup;
+			children = (
+				82BA8B491825D51700200624 /* Boss_Attack.atlas */,
+				82BA8B4A1825D51700200624 /* Boss_Death.atlas */,
+				82BA8B4B1825D51700200624 /* Boss_GetHit.atlas */,
+				82BA8B4C1825D51700200624 /* Boss_Idle.atlas */,
+			);
+			path = Boss;
+			sourceTree = "<group>";
+		};
+		82BA8B4E1825D51700200624 /* Warrior */ = {
+			isa = PBXGroup;
+			children = (
+				82BA8B4F1825D51700200624 /* Warrior_Attack.atlas */,
+				82BA8B501825D51700200624 /* Warrior_Death.atlas */,
+				82BA8B511825D51700200624 /* Warrior_GetHit.atlas */,
+				82BA8B521825D51700200624 /* Warrior_Idle.atlas */,
+			);
+			path = Warrior;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -248,11 +288,19 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				82BA8B5B1825D51700200624 /* Warrior_GetHit.atlas in Resources */,
 				82BA8B111825AEE200200624 /* Spaceship.png in Resources */,
+				82BA8B5A1825D51700200624 /* Warrior_Death.atlas in Resources */,
 				82BA8B131825AEE200200624 /* Images.xcassets in Resources */,
+				82BA8B5C1825D51700200624 /* Warrior_Idle.atlas in Resources */,
+				82BA8B541825D51700200624 /* Boss_Attack.atlas in Resources */,
+				82BA8B591825D51700200624 /* Warrior_Attack.atlas in Resources */,
+				82BA8B551825D51700200624 /* Boss_Death.atlas in Resources */,
+				82BA8B571825D51700200624 /* Boss_Idle.atlas in Resources */,
 				82BA8B091825AEE200200624 /* Main_iPad.storyboard in Resources */,
 				82BA8B061825AEE200200624 /* Main_iPhone.storyboard in Resources */,
 				82BA8AFD1825AEE200200624 /* InfoPlist.strings in Resources */,
+				82BA8B561825D51700200624 /* Boss_GetHit.atlas in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
