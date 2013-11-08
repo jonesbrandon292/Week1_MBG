@@ -15,24 +15,18 @@
 {
     if (self = [super initWithSize:size])
     {
-        /* Setup your scene here */
-        
-        //self.backgroundColor = [SKColor colorWithRed:0.15 green:0.15 blue:0.3 alpha:1.0];
         
         SKLabelNode *myLabel = [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
         
         myLabel.text = @"Super Game";
         myLabel.fontSize = 30;
         
-        // Set Title to the top 3/4 of the screen.
-        int yPos = CGRectGetMidY(self.frame);
-        yPos = yPos + yPos * 0.5f;
-        myLabel.position = CGPointMake(CGRectGetMidX(self.frame), yPos);
-        
+        // Set Title to the top 3/4 of the screen and add it to the scene.
+        myLabel.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMaxY(self.frame) * 0.75f);
         [self addChild:myLabel];
         
+        // Set background color and add a play button to the scene
         self.backgroundColor = [SKColor blueColor];
-        self.scaleMode = SKSceneScaleModeAspectFit;
         [self addChild: [self newPlayButton]];
     }
     return self;
@@ -50,35 +44,27 @@
 
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
+    //Finds the playbutton child node
     SKNode *playButton = [self childNodeWithName:@"playButton"];
     if (playButton != nil)
     {
         for (UITouch *touch in touches)
         {
-            if ([touch view] == self.view)
-            {
-                CGPoint touchLocation = [touch locationInView:self.view];
+                CGPoint touchLocation = [touch locationInNode:self];
             
+                // if the playbutton is within the location touched.
                 if([playButton containsPoint:touchLocation])
                 {
-            
-                    playButton.name = nil;
-                    SKAction *moveUp = [SKAction moveByX: 0 y: 100.0 duration: 0.5];
-                    SKAction *zoom = [SKAction scaleTo: 2.0 duration: 0.25];
-                    SKAction *pause = [SKAction waitForDuration: 0.5];
-                    SKAction *fadeAway = [SKAction fadeOutWithDuration: 0.25];
-                    SKAction *remove = [SKAction removeFromParent];
-                    SKAction *moveSequence = [SKAction sequence:@[moveUp, zoom, pause, fadeAway, remove]];
+                    SKAction *zoom = [SKAction scaleTo: 1.5 duration: 0.2];
+                    SKAction *fadeAway = [SKAction fadeOutWithDuration: 0.2];
+                    SKAction *moveSequence = [SKAction sequence:@[zoom,fadeAway]];
                     [playButton runAction: moveSequence];
-    
     
                     [playButton runAction: moveSequence completion:^{
                         SKScene *mainScene  = [[MyScene alloc] initWithSize:self.size];
-                        SKTransition *doors = [SKTransition doorsOpenVerticalWithDuration:0.5];
-                        [self.view presentScene:mainScene transition:doors];
+                        [self.view presentScene:mainScene];
                     }];
                 }
-            }
         }
     }
 }

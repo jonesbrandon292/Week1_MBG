@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>D9E15CDE-AE82-49BF-9E8F-64C0C66B8F18</string>
+	<key>IDESourceControlProjectName</key>
+	<string>Week1_BrandonJones</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>C1A6613B-5A3E-4F05-8F22-37135CF2C438</key>
+		<string>https://github.com/jonesbrandon292/Week1_MBG.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>Week1_BrandonJones/Week1_BrandonJones.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>C1A6613B-5A3E-4F05-8F22-37135CF2C438</key>
+		<string>../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/jonesbrandon292/Week1_MBG.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>C1A6613B-5A3E-4F05-8F22-37135CF2C438</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>C1A6613B-5A3E-4F05-8F22-37135CF2C438</string>
+			<key>IDESourceControlWCCName</key>
+			<string>Week1_MBG</string>
+		</dict>
+	</array>
+</dict>
+</plist>

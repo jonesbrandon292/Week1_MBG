@@ -61,6 +61,7 @@
         m_player_health = 5;
         m_enemy_health = 5;
         
+        
         int enemyXPos = CGRectGetMidX(self.frame);
         enemyXPos = enemyXPos + enemyXPos * 0.5f;
         int enemyYPos = CGRectGetMidY(self.frame);
@@ -418,9 +419,15 @@
             {
                 if([m_retry_button containsPoint:touchLocation])
                 {
-                    SKScene *menuScene  = [[MainMenuScene alloc] initWithSize:self.size];
-                    SKTransition *doors = [SKTransition doorsOpenVerticalWithDuration:0.5];
-                    [self.view presentScene:menuScene transition:doors];
+                    SKAction *zoom = [SKAction scaleTo: 1.5 duration: 0.2];
+                    SKAction *fadeAway = [SKAction fadeOutWithDuration: 0.2];
+                    SKAction *moveSequence = [SKAction sequence:@[zoom,fadeAway]];
+                    [m_retry_button runAction: moveSequence];
+                    
+                    [m_retry_button runAction: moveSequence completion:^{
+                        SKScene *menuScene  = [[MainMenuScene alloc] initWithSize:self.size];
+                        [self.view presentScene:menuScene];
+                    }];
                 }
                 return;
             }
